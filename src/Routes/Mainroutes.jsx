@@ -3,7 +3,7 @@ import About from "../Pages/About";
 import Recipes from "../Pages/Recipes";
 import { Routes, Route} from "react-router-dom";
 import Create from "../Pages/Create";
-import SingleRecipe from "../Pages/singleRecipe";
+import SingleRecipe from "../Pages/SingleRecipe";
 import Fav from "../Pages/Fav";
 import PageNotFound from "../Pages/PageNotFound";
 

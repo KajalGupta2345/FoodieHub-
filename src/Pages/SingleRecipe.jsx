@@ -21,6 +21,7 @@ const SingleRecipe = () => {
           ingredients: recipe?.ingredients,
           instructions: recipe?.instructions,
           category: recipe?.category,
+          price: recipe?.price,
         }
       : {},
   });
@@ -28,13 +29,13 @@ const SingleRecipe = () => {
   const updateHandler = (recipeData) => {
     const index = data.findIndex((recipe) => id == recipe.id);
     const copydata = [...data];
-    copydata[index] = {...copydata[index], ...recipeData ,id};
+    copydata[index] = { ...copydata[index], ...recipeData, id };
     setdata(copydata);
     localStorage.setItem("Recipes", JSON.stringify(copydata));
 
     const indexFav = fav.findIndex((f) => id == f.id);
     const copyfav = [...fav];
-    copyfav[indexFav] = {...copyfav[indexFav],...recipeData ,id};
+    copyfav[indexFav] = { ...copyfav[indexFav], ...recipeData, id };
     setfav(copyfav);
     localStorage.setItem("fav", JSON.stringify(copyfav));
     toast.success("Recipe Updated!");
@@ -44,23 +45,21 @@ const SingleRecipe = () => {
     const recipeData = data.filter((recipe) => id !== recipe.id);
     setdata(recipeData);
     localStorage.setItem("Recipes", JSON.stringify(recipeData));
-    const filterFav = fav.filter((f) => f.id !== id);
+    const filterFav = fav.filter((f) => id !== f.id);
     setfav(filterFav);
-    localStorage.setItem("fav", JSON.stringify(filterFav));
+    localStorage.setItem("fav",JSON.stringify(filterFav));
     toast.success("Recipe Deleted!");
     navigate("/recipes");
   };
 
-  const favHandler = () => {
-    let copy = [...fav];
+  const FavHandler = () => {
+    const copy = [...fav];
     copy.push(recipe);
     setfav(copy);
     localStorage.setItem("fav", JSON.stringify(copy));
   };
-  const unfavHandler = () => {
-    const filterFav = fav.filter((f) => f.id !== id);
-    console.log(filterFav);
-
+  const UnFavHandler = () => {
+    const filterFav = fav.filter((f) => f.id != recipe?.id);
     setfav(filterFav);
     localStorage.setItem("fav", JSON.stringify(filterFav));
   };
@@ -76,15 +75,15 @@ const SingleRecipe = () => {
     <div className="w-[100%] rounded flex  justify-center items-center bg-white p-10 gap-x-18 mt-20 ">
       {/* left */}
       <div className=" relative w-[40%] flex flex-col justify-center items-center gap-y-3 border-4 rounded border-orange-400 p-5">
-        {fav.find((f) => f.id == id) ? (
+        {fav.find((f) => f.id == recipe.id) ? (
           <i
-            onClick={unfavHandler}
-            className="absolute text-5xl text-orange-400 ri-heart-fill right-5 top-3 "
+            onClick={UnFavHandler}
+            className="text-5xl text-orange-600 absolute right-[5%] top-[3%] ri-heart-fill"
           ></i>
         ) : (
           <i
-            onClick={favHandler}
-            className="absolute text-5xl text-orange-400 ri-heart-line right-5 top-3 "
+            onClick={FavHandler}
+            className="text-5xl text-orange-600 absolute right-[5%] top-[3%] ri-heart-line"
           ></i>
         )}
 
@@ -95,8 +94,12 @@ const SingleRecipe = () => {
           alt=""
         />
         <p className="text-xl font-black text-orange-400">{recipe.chefName}</p>
+        <p className="text-xl font-black text-orange-400 absolute right-[30%] bottom-[30%] ">
+          ₹{recipe.price}
+        </p>
         <p className="text-md font-black text-black text-center font-medium">
-          {recipe.description.slice(0,50)}... <span className="text-blue-400">more</span>
+          {recipe.description.slice(0, 50)}...{" "}
+          <span className="text-blue-400">more</span>
         </p>
         <p className="text-md font-black text-black font-medium">
           <span className="font-bold">Category</span> : {recipe.category}
@@ -117,19 +120,19 @@ const SingleRecipe = () => {
         />
         <small className="text-orange-400">This is the error.</small>
         <div className="flex justify-between">
-         <input
-          className=" p-2  border border-gray-300 outline-0 focus:ring-2 focus:ring-orange-400  text-black  rounded font-bold "
-          {...register("chefName")}
-          type="text"
-          placeholder="Chef name"
-        />
-        <input
-          className=" p-2  border border-gray-300 outline-0 focus:ring-2 focus:ring-orange-400  text-black  rounded font-bold "
-          {...register("price")}
-          type="text"
-          placeholder="Enter Recipe Price"
-        />
-       </div>
+          <input
+            className=" p-2  border border-gray-300 outline-0 focus:ring-2 focus:ring-orange-400  text-black  rounded font-bold "
+            {...register("chefName")}
+            type="text"
+            placeholder="Chef name"
+          />
+          <input
+            className=" p-2  border border-gray-300 outline-0 focus:ring-2 focus:ring-orange-400  text-black  rounded font-bold "
+            {...register("price")}
+            type="text"
+            placeholder="Enter Recipe Price"
+          />
+        </div>
         <input
           className=" p-2 border  border-gray-300 outline-0 focus:ring-2 focus:ring-orange-400 text-black  rounded font-bold "
           {...register("image")}
