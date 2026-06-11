@@ -13,7 +13,7 @@ const Mainroutes = () => {
       <Routes>
         <Route path="/" element ={<Home/>} />
         <Route path="/recipes" element ={<Recipes/>} />
-        <Route path="/about" element ={<About/>} />
+        <Route path="/about" element ={<About/>} /> 
         <Route path="/create-recipe" element ={<Create/>} />
         <Route path="/recipe/details/:id" element={<SingleRecipe/>}/>
         <Route  path="/favorite-recipe" element={<Fav/>}/>
